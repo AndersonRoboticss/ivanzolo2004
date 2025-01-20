@@ -3,196 +3,303 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Андерсон Роботикс</title>
+    <title>Сайт технологий</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap');
-        
-        /* Основные стили */
         body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
             margin: 0;
-            font-family: 'Roboto', sans-serif;
-            background: url('https://cdn.discordapp.com/attachments/1298217831250530304/1330833098220503050/1674742150_bogatyr-club-p-fon-dlya-saita-fon-2.png?ex=678f6a68&is=678e18e8&hm=ac408778e102c8a13f9f02b917806465b73e403b5e9154f31ea5f36aaca7c962&') no-repeat center center fixed;
-            background-size: cover;
-            overflow-x: hidden;
-            color: #fff;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
         }
 
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
+        header {
             width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: -1;
+            background-color: #1f1f1f;
+            padding: 10px 0;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .burger-menu {
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            background-image: url('https://cdn.discordapp.com/attachments/1330444730579947593/1330448032591777813/40341502.png');
+            background-size: cover;
+            margin: 0 auto;
+        }
+
+        nav {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 50px;
+            left: 0;
+            right: 0;
+            background-color: #1f1f1f;
+            z-index: 1;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 0, 0, 0.5);
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 0, 0, 0.7);
         }
 
         .container {
-            padding: 20px;
             text-align: center;
-            animation: fadeIn 2s;
+            animation: fadeIn 1s ease-in-out;
+            margin-top: 20px;
+            padding: 20px;
+        }
+
+        h1 {
+            margin: 20px 0;
+            font-weight: 600;
+        }
+
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .product-card {
+            background-color: rgba(255, 0, 0, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.5);
+            border-radius: 10px;
+            padding: 20px;
+            width: 220px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .product-card:hover .description {
+            opacity: 1;
+            right: 0;
+        }
+
+        .category-button {
+            background-color: rgba(255, 0, 0, 0.7);
+            color: #ffffff;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .category-button:hover {
+            background-color: rgba(255, 0, 0, 1);
+            transform: scale(1.05);
+        }
+
+        .description {
+            position: absolute;
+            top: 0;
+            right: -100%;
+            width: 220px;
+            max-height: 150px; /* Максимальная высота описания */
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #000;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(255, 0, 0, 0.5);
+            transition: opacity 0.3s ease, right 0.3s ease;
+            opacity: 0;
+            z-index: 2;
+            overflow-y: auto; /* Добавляем вертикальную прокрутку */
+            font-family: 'Poppins', sans-serif; /* Добавляем красивый шрифт */
+            border: 1px solid rgba(255, 0, 0, 0.5); /* Добавляем границу для всех описаний */
+        }
+
+        .product-image {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            object-fit: cover; /* Обеспечивает корректное масштабирование изображения */
+        }
+
+        .price {
+            font-size: 18px;
+            color: #ff4500;
+            margin: 10px 0;
+            font-family: 'Poppins', sans-serif; /* Красивый шрифт для цен */
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 20px;
+            background-color: #1f1f1f;
+            text-align: center;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        header h1 {
-            font-family: 'Oswald', sans-serif;
-            margin-top: 0;
-            font-size: 3em;
-            border-bottom: 2px solid #ff6f61;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            animation: slideIn 1.5s ease-out;
-        }
-
-        header p {
-            font-size: 1.2em;
-            line-height: 1.5;
-            max-width: 800px;
-            margin: 0 auto 40px;
-            animation: slideIn 2s ease-out;
-        }
-
-        @keyframes slideIn {
             from {
-                transform: translateY(-20px);
                 opacity: 0;
             }
             to {
-                transform: translateY(0);
                 opacity: 1;
             }
         }
 
-        nav ul {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            animation: fadeIn 2.5s;
-            margin-top: -20px; /* Поднять отделы выше */
+        .section {
+            margin-top: 40px;
         }
 
-        .nav-item {
-            text-decoration: none;
-            color: #fff;
-            font-size: 1.5em;
-            font-family: 'Oswald', sans-serif;
-            position: relative;
-            cursor: pointer;
-            transition: color 0.3s;
-            width: calc(100% - 40px);
-            max-width: 400px;
-            margin: 10px;
+        .section h2 {
+            margin: 20px 0;
+            font-weight: 600;
         }
 
-        .nav-item:hover {
-            color: #ff6f61;
-        }
-
-        .description {
-            display: none;
-            position: absolute;
-            top: 50px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 300px;
-            background: rgba(0, 0, 0, 0.9);
-            border: 1px solid #ff6f61;
-            padding: 20px;
-            z-index: 10;
-            font-size: 0.9em;
-            font-family: 'Roboto', sans-serif;
-            border-radius: 8px;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-        }
-
-        .nav-item:hover .description {
-            display: block;
-            opacity: 1;
-            transform: translateY(-10px);
-        }
-
-        .department {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            border: 2px solid #ff6f61;
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
-        }
-
-        .department img {
-            width: 100%; /* Увеличить размер изображений */
-            max-width: 400px;
-            height: auto; /* Увеличить размер изображений */
-            border-radius: 10px;
-            margin-top: 10px;
-        }
-
-        .nav-item + .department {
-            margin-top: 20px;
-        }
-
-        @media (max-width: 600px) {
-            header h1 {
-                font-size: 2em;
+        /* Адаптивные стили для мобильных устройств */
+        @media (max-width: 768px) {
+            .products {
+                flex-direction: column;
+                align-items: center;
             }
-            
-            header p {
-                font-size: 1em;
-            }
-            
-            .nav-item {
-                font-size: 1em;
-            }
-            
+
             .description {
-                width: 90%;
-                left: 5%;
-                transform: translateX(0);
+                position: static;
+                width: auto;
+                max-height: 100px; /* Уменьшаем максимальную высоту для мобильных устройств */
+                margin-top: 10px;
+                transition: opacity 0.3s ease, max-height 0.3s ease;
+            }
+
+            .product-card:hover .description {
+                right: auto;
+                opacity: 1;
+                max-height: 150px; /* Увеличиваем высоту при наведении */
             }
         }
     </style>
 </head>
 <body>
-    <div class="overlay"></div>
-    <div class="container">
-        <header>
-            <h1>Андерсон Роботикс</h1>
-            <p>"Андерсон Роботикс" – паратехнологическая фирма, специализирующаяся на продаже аномальных роботов, андроидов, носителей искусственного интеллекта, компьютерных программ и кибернетических приспособлений. Хотя "Андерсон Роботикс" существует с 1990 года, фирма впервые привлекла внимание Фонда в 2007 году, после захвата SCP-1360 в ходе рейда на склад незаконно сбываемых паратехнологий в Сиэтле. С этого первого контакта "Андерсон Роботикс" были признаны основным распространителем паратехнологической робототехники.</p>
-        </header>
-        <nav>
-            <ul>
-                <li class="nav-item department">
-                    DRM
-                    <img src="https://cdn.discordapp.com/attachments/1298217831250530304/1330839044711780393/image.png?ex=678f6ff2&is=678e1e72&hm=92509302289f7ac40cb4aac3257c369124d272d55e177a4f3809e1dac315e0fb&" alt="DRM Department">
-                    <div class="description">Добро пожаловать в отдел исследований и медицины, где наука сочетается с технологиями для создания будущего здоровья. Команда ученых и врачей работает вместе для решения самых сложных медицинских проблем и разработки передовых методов диагностики и лечения.</div>
-                </li>
-                <li class="nav-item department">
-                    ARD
-                    <img src="https://cdn.discordapp.com/attachments/1330250868309885071/1330837470287233085/image.png?ex=678f6e7a&is=678e1cfa&hm=12960cf3799c58672c2dc2683873fe991121a0bf81b0de77dc988f3950f7e2f1&" alt="ARD Department">
-                    <div class="description">Команда высококвалифицированных и непоколебимых защитников, готовых стать стеной надежной безопасности в любой ситуации. Их доблесть, профессионализм и преданность делу безопасности делают их непревзойденными в своем деле.</div>
-                </li>
-                <li class="nav-item department">
-                    SED
-                    <img src="https://cdn.discordapp.com/attachments/1298217831250530304/1330838863937277982/image.png?ex=678f6fc6&is=678e1e46&hm=94a9faa0a8aa50f57bd0d6cfc16dde241704eccd8c4e0575a1f2c2c7bc6321dd&" alt="SED Department">
-                    <div class="description">Это сверхсекретное подразделение, специализирующееся на сборе, анализе и эксплуатации аномальных данных и технологий. Отдел функционирует на стыке передовых исследований в области искусственного интеллекта, робототехники и паранормальных явлений, стремясь получить конкурентное преимущество в мире корпоративного шпионажа и разведки.</div>
-                </li>
-            </ul>
+    <header>
+        <div class="burger-menu" onclick="toggleMenu()"></div>
+        <nav id="navMenu">
+            <a href="#">Главная</a>
+            <a href="#">Категории</a>
+            <a href="#">Контакты</a>
+            <a href="#">О нас</a>
         </nav>
+    </header>
+    
+    <div class="container">
+        <h1>Добро пожаловать на сайт технологий</h1>
+        <div class="products">
+            <div class="product-card">
+                <img src="https://cdn.discordapp.com/attachments/1323663834711461898/1323663869276586046/Screenshot_2024-10-24-14-38-13-648_com.discord-edit.jpg?ex=678db94a&is=678c67ca&hm=e39b2d748eeeed0508c1a82d3835984e6792b32c3d9f8f54ff6b38bd57bc5dac" alt="Товар 2" class="product-image">
+                <h2>Протез печени "R"</h2>
+                <p class="price">150.000 $</p>
+                <a href="https://discord.com/users/637718674526175243" class="category-button" target="_blank">Купить</a>
+                <div class="description">
+                    <strong>Описание:</strong>
+                    <p>Имплант печени созданный из безопасных материалов для человека. Внутри протеза находится механизм который забирает из крови все вещества и перерабатывает их.</p>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="https://cdn.discordapp.com/attachments/1330444730579947593/1330455887491629136/image.png?ex=678e0b1a&is=678cb99a&hm=d54b1656272fee0fe1dde61075eccb5ab805c7fd9fcbb172b4aa4a25e0c71458" alt="Glance" class="product-image">
+                <h2>Glance</h2>
+                <p class="price">Недоступно</p>
+                <a href="https://discord.com/users/637718674526175243" class="category-button" target="_blank">Купить</a>
+                <div class="description">
+                    <strong>Описание:</strong>
+                    <p>- Очки, в статичном положении улучшают обзор в дымовой завесе. Также позволяют уменьшить эффект ослепления;<br>
+                    - Очки, подключены казалось к обычным часам, но на самом деле они служат для включения и выключения очков;<br>
+                    - Эти очки могут помочь против нападения повстанцев хаоса, если они применяют светошумовые гранаты или дым.</p>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="https://cdn.discordapp.com/attachments/1314225469419294780/1330456742407962645/image.png?ex=678e0be6&is=678cba66&hm=48354d6044ed70b8b1a43f0170d5b9d85a97d38276c00d6242c119095f84bfa0" alt="Assistant" class="product-image">
+                <h2>Assistant</h2>
+                <p class="price">45 м. $</p>
+                <a href="https://discord.com/users/637718674526175243" class="category-button" target="_blank">Купить</a>
+                <div class="description">
+                    <strong>Описание:</strong>
+                    <p>Робот "Assistant" был выполнен для помощи людям, ассистирования, экстренной помощи. Имеет ряд медицинских изделий, препаратов, вакцин. Присутствуют датчики, сканеры, экзоскелеты.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Новый раздел 1 -->
+        <div class="section">
+            <div class="products">
+                <div class="product-card">
+                    <img src="https://cdn.discordapp.com/attachments/1330490553414193224/1330490567657787484/image.png?ex=678e2b66&is=678cd9e6&hm=8d4f5e4f6347d1e9883e1e01efd29330c27e607b49776813f815ffe26dced3b3" alt="Протезы типа 'А'" class="product-image">
+                    <h2>Протезы типа "А"</h2>
+                    <p class="price">65.000 $</p>
+                    <a href="https://discord.com/users/637718674526175243" class="category-button" target="_blank">Купить</a>
+                    <div class="description">
+                        <strong>Описание:</strong>
+                        <p>Протезы рук сделанные из карбона, титана и прочих механизмов. Сделаны для гражданского пользования.</p>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="https://cdn.discordapp.com/attachments/1314225469419294780/1330487063707123762/image.png?ex=678e2823&is=678cd6a3&hm=d6190a010a02322f3772c4f0228b852deea3145d6aa7b81ad7e7401d1286ad36" alt="Друг на любой вкус" class="product-image">
+                    <h2>Друг на любой вкус</h2>
+                    <p class="price">Недоступно</p>
+                    <a href="https://discord.com/users/637718674526175243" class="category-button" target="_blank">Купить</a>
+                    <div class="description">
+                        <strong>Описание:</strong>
+                        <p>Друг на любой вкус Андерсон Роботикс относится к десяти полностью сочлененным гуманоидным игрушечным роботам, произведенным Anderson Robotics. Корпус каждого экземпляра состоит из формованных поликарбонатных корпусов на алюминиевой раме. Внешняя часть этих корпусов покрыта черной тканью идентичного состава УГАСП, в то время как внутренняя часть покрыта тауматургическими символами. В полностью собранном виде каждый экземпляр имеет высоту около 31 см и весит около 3 кг.</p>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="https://cdn.discordapp.com/attachments/1325531639656480850/1330487567166214247/image.png?ex=678e289b&is=678cd71b&hm=267dc52bbd27b939ddb5475701e00b9b0acc94bb6a0d700ff23896dbd8b43d52" alt="Скелетный Усилитель 'Атлант'" class="product-image">
+                    <h2>Скелетный Усилитель "Атлант"</h2>
+                    <p class="price">9 м. $</p>
+                    <a href="https://discord.com/users/637718674526175243" class="category-button" target="_blank">Купить</a>
+                    <div class="description">
+                        <strong>Описание:</strong>
+                        <p>Это комплексная система имплантируемых титановых компонентов, разработанная для значительного повышения прочности и устойчивости скелета. Основные компоненты</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
+    <footer>
+        <p>&copy; 2023 Сайт технологий. Все права защищены.</p>
+    </footer>
+
     <script>
-        // JavaScript is not necessary for this specific hover effect, 
-        // but you can add additional interactivity or enhancements here if needed.
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
+        }
     </script>
 </body>
 </html>
